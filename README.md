@@ -1,7 +1,7 @@
 
 ## ICP 배포 
 ---
-sample service6를 ICP 컨테이너에 배포하는 방법이다.
+sample springboot service 를 ICP 컨테이너에 배포하는 방법이다.
 ### 배포 디렉토리 구조
 배포 디렉토리는 루트 밑에 deployment-k8s이고 4개의 파일이 존재한다. deploy.yaml 파일은 k8s컨테이너의 리소스를 생성한다. Dockerfile은 프로젝트를 도커 이미지로 빌드하기 위한 파일이다. Jenkinsfile-icp는  젠킨스 pipeline 스크립트이다. pipeline-icp.properties 는 파이프라인에서 사용하기 위한 변수를 미리 정의한 환경변수 정의 파일이다.
 ```code
