@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.microservices.mvp.dao.SampleBoardDao">
+	<select id="selectBoardList" parameterType="String" resultType="com.springboot.microservices.mvp.model.SampleBoard">
+	    select 
+	    	board_id as boardId,
+	    	board_subject as boardSubject,
+	    	board_contents as boardContents,
+	    	reg_user_nm as regUserNm,
+	    	reg_yms as regYms,
+	    	amnd_yms as amndYms
+	    from tb_BoardList_wh
+	    ;
+	</select>
+	
+	<insert id="insertBoard" parameterType="com.springboot.microservices.mvp.model.SampleBoard">
+	INSERT into tb_BoardList_wh
+		(
+			board_id,
+			board_subject,
+			board_contents,
+			reg_user_nm,
+			reg_yms
+		)
+		values
+		(
+			(
+			SELECT
+				NVL(MAX(a.board_id),0)+1
+				FROM tb_BoardList_wh as a
+			),
+			#{boardSubject},
+			#{boardContents},
+			#{regUserNm},
+			DATE_FORMAT(SYSDATE() , '%Y%m%d%H%i%s')
+		)
+		;
+	
+	</insert>
+	
+	
+	<update id="updateBoard" parameterType="com.springboot.microservices.mvp.model.SampleBoard">
+	UPDATE tb_BoardList_wh 
+	SET board_subject = #{boardSubject},
+		board_contents = #{boardContents},
+		reg_user_nm = #{regUserNm},
+		amnd_yms = DATE_FORMAT(SYSDATE() , '%Y%m%d%H%i%s')
+	WHERE board_id = #{boardId}
+	
+	</update>
+	
+	<delete id="deleteBoard" parameterType="com.springboot.microservices.mvp.model.SampleBoard">
+	DELETE 
+		FROM tb_BoardList_wh
+		WHERE board_id = #{boardId}
+	
+	</delete>
+<!-- 
+	<select id="selectUser2" resultType="sampleUser">
+	    select 
+	    	user_id,
+	    	user_nm,
+	    	addr
+	    from tb_user;
+	</select>	
+	
+	<select id="selectUserById" parameterType="String" resultType="sampleUser">
+	    select 
+	    	user_id,
+	    	user_nm,
+	    	addr
+	    from tb_user
+	    where user_id = #{userId}
+	</select>		
+	
+	
+	<select id="selectTest" resultType="int">
+	    select 
+	    	1
+	   ;
+	</select>
+	
+	<insert id="insertUser" parameterType="sampleUser">
+		insert into tb_user (
+			user_id,
+			user_nm,
+			addr
+		) values (	
+			#{userId},
+			#{userNm},
+			#{addr}
+		)
+	</insert>
+	<update id="updateUser" parameterType="sampleUser">
+		update 
+			tb_user
+		set
+			user_nm = #{userNm},
+			addr = #{addr},
+			cell_phone = #{cellPhone}
+		where 1=1
+		and user_id = #{userId}
+	</update>
+	
+	<delete id="deleteUser" parameterType="String">
+		delete from tb_user
+		where user_id = #{userId}
+	</delete>	
+	 -->
+	
+</mapper>
+
+
+
